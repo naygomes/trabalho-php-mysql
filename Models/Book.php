@@ -14,8 +14,7 @@ class Book{
             $stm = $pdo->prepare("INSERT INTO books (`ISBN`,`bookName`,`releaseYear`,`publisher`,`aid`) VALUES (?,?,?,?,?)");
             $stm->execute([$request->ISBN,$request->bookName,$request->releaseYear,$request->publisher,$request->aid]);
             $stm->closeCursor();
-            var_dump($pdo->ISBN);
-            return self::find($pdo->ISBN);
+            return self::find($request->ISBN);
         }
 
     static public function all():array{
