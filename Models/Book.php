@@ -14,6 +14,7 @@ class Book{
             $stm = $pdo->prepare("INSERT INTO books (`ISBN`,`bookName`,`releaseYear`,`publisher`,`aid`) VALUES (?,?,?,?,?)");
             $stm->execute([$request->ISBN,$request->bookName,$request->releaseYear,$request->publisher,$request->aid]);
             $stm->closeCursor();
+            var_dump($pdo->ISBN);
             return self::find($pdo->ISBN);
         }
 
@@ -27,7 +28,8 @@ class Book{
 
     static public function find($ISBN):Book{
         $pdo = \DB::connect();
-        $stm = $pdo->prepare("Select * from books where ISBN=?");
+        $stm = $pdo->prepare("Select `ISBN`,`bookName`,`releaseYear`,`publisher`,`name`,`surname` from books LEFT JOIN Authors ON books.aid = authors.aid where ISBN=?");
+        
         $stm->setFetchMode(\PDO::FETCH_CLASS, 'Models\Book');
         $stm->execute([$ISBN]);
         $book = $stm->fetch();

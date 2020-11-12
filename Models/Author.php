@@ -29,6 +29,7 @@ class Author{
         $stm->setFetchMode(\PDO::FETCH_CLASS, 'Models\Author');
         $stm->execute([$aid]);
         $author = $stm->fetch();
+        var_dump($aid);
         $stm->closeCursor();
         return $author;
     }
@@ -58,7 +59,7 @@ class Author{
         $stm = $pdo->prepare("Delete from authors where aid=?");
         $stm->execute([$request->aid]);
         //$stm->closeCursor();
-        echo 'Deletado com Sucesso!';
+        echo 'Deletado com Sucesso! ';
         return $stm->rowCount();
 
     }
